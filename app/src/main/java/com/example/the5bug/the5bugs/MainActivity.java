@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
         ourDevice = getIntent().getParcelableExtra("ourDevice");
 
         connectText = (TextView)findViewById(R.id.textView5);
