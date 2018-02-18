@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import io.particle.android.sdk.cloud.ParticleCloud;
 import io.particle.android.sdk.cloud.ParticleCloudException;
+import io.particle.android.sdk.cloud.ParticleDevice;
 import io.particle.android.sdk.utils.Async;
 import io.particle.android.sdk.utils.Toaster;
 
@@ -19,6 +20,7 @@ public class Login extends AppCompatActivity {
 
     Button loginBtn;
     EditText usr, psd;
+    ParticleDevice ourDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class Login extends AppCompatActivity {
 
             public Void callApi(ParticleCloud sparkCloud) throws ParticleCloudException, IOException {
                 sparkCloud.logIn(emailInput, passInput);
+                ourDevice = sparkCloud.getDevice("3b0029000f51353433323633");
                 return null;
             }
 
@@ -61,7 +64,8 @@ public class Login extends AppCompatActivity {
 
                 Toaster.l(Login.this, "Logged in");
 
-                Intent myintent = new Intent(Login.this, MainActivity.class);
+                Intent myintent = new Intent(getBaseContext(), MainActivity.class);
+                myintent.putExtra("ourDevice", ourDevice);
                 startActivity(myintent);
                 // Switch to new screen to list all connected devices
 

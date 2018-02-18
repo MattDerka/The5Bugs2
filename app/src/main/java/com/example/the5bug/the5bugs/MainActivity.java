@@ -32,17 +32,19 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tx1;
     int counter = 3;
+    ParticleDevice ourDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ourDevice = getIntent().getParcelableExtra("ourDevice");
 
         connectText = (TextView)findViewById(R.id.textView5);
 
-        View viewF = findViewById(android.R.id.content);
-        TEST(viewF, "fa","fda");
+        connectText.setText(ourDevice.getName());
+
+        final View viewF = findViewById(android.R.id.content);
 
 
 
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         armButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //turnOn(viewF);
                 Toast.makeText(getApplicationContext(), armString, Toast.LENGTH_SHORT).show();
             }
         });
@@ -66,36 +69,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * @brief This function attempts to login with the user name and password passed in as arguments
-     * @param myView specifies the view from which this is being called
-     * @param emailInput specifies the user name to try logging in with
-     * @param passInput specifies the password to attempt logging in with
-     */
-    private void TEST(View myView, final String emailInput, final String passInput){
+//    private void turnOn(View myView){
+//
+//        Async.executeAsync(ParticleCloud.get(myView.getContext()), new Async.ApiWork<ParticleCloud, Void>() {
+//
+//            public Void callApi(ParticleCloud sparkCloud) throws ParticleCloudException, IOException {
+//                d = sparkCloud.getDevice("3b0029000f51353433323633");
+//                try{
+//                    d.callFunction("setMotionOn", null);
+//                }catch(Exception e){
+//                    Toast.makeText(getApplicationContext(),"ERROR",Toast.LENGTH_SHORT).show();
+//                }
+//
+//                return null;
+//            }
+//
+//            @Override
+//            public void onSuccess(Void aVoid) {
+//                Toaster.l(MainActivity.this, "System is armed.");
+//            }
+//
+//            @Override
+//            public void onFailure(ParticleCloudException e) {
+//                //Log.e("LOGIN_FAILURE", e);
+//                Toaster.l(MainActivity.this, "ERROR RUNNING CODE.");
+//            }
+//        });
+//    }
 
-        Async.executeAsync(ParticleCloud.get(myView.getContext()), new Async.ApiWork<ParticleCloud, Void>() {
-
-            public Void callApi(ParticleCloud sparkCloud) throws ParticleCloudException, IOException {
-                d = sparkCloud.getDevice("3b0029000f51353433323633");
-                connectText.setText(d.getName());
-                return null;
-            }
-
-            @Override
-            public void onSuccess(Void aVoid) {
-
-                Toaster.l(MainActivity.this, "GHLDFKDSKLFJDSLVKDS in");
-                // Switch to new screen to list all connected devices
-
-            }
-
-            @Override
-            public void onFailure(ParticleCloudException e) {
-                //Log.e("LOGIN_FAILURE", e);
-                Toaster.l(MainActivity.this, "Wrong credentials or no internet connectivity, please try again");
-            }
-        });
-    }
 
 }
