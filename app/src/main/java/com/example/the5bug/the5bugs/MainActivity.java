@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -69,17 +70,26 @@ public class MainActivity extends AppCompatActivity {
                 armButton.setBackgroundColor(Color.GRAY);
                 disButton.setBackgroundColor(Color.LTGRAY);
 
-                List<String> armList = new ArrayList<String>();
-                armList.add("Arm");
+                Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Integer>() {
+                    @Override
+                    public Integer callApi(ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+                        List<String> list = new ArrayList<>();
+                        list.add("Arm");
+                        try{
+                            return ourDevice.callFunction("setMotion", list);
+                        }catch(ParticleDevice.FunctionDoesNotExistException e){
+                            Log.e("ERR", e.toString());
+                        }
+                        return -2;
+                    }
 
-                try{
-                    ourDevice.callFunction("setMotion", armList);
-                }catch(Exception e){
-                    e.getMessage();
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-                //turnOn(viewF);
-                //Toast.makeText(getApplicationContext(), armString, Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Integer result) {
+                        Toast.makeText(getApplicationContext(),"You did it.", Toast.LENGTH_SHORT).show();
+                    }
+                    public void onFailure(ParticleCloudException value) {
+                        Log.e("ERR", "Fail : " + value.toString());
+                    }
+                });
             }
         });
 
@@ -92,18 +102,26 @@ public class MainActivity extends AppCompatActivity {
                 armButton.setBackgroundColor(Color.LTGRAY);
 
 
-                List<String> disarmList = new ArrayList<String>();
-                disarmList.add("Disarm");
+                Async.executeAsync(ParticleCloudSDK.getCloud(), new Async.ApiWork<ParticleCloud, Integer>() {
+                    @Override
+                    public Integer callApi(ParticleCloud particleCloud) throws ParticleCloudException, IOException {
+                        List<String> list = new ArrayList<>();
+                        list.add("Disarm");
+                        try{
+                            return ourDevice.callFunction("setMotion", list);
+                        }catch(ParticleDevice.FunctionDoesNotExistException e){
+                            Log.e("ERR", e.toString());
+                        }
+                        return -2;
+                    }
 
-                try{
-                    ourDevice.callFunction("setMotion", disarmList);
-                }catch(Exception e){
-                    e.getMessage();
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-
-                //turnOff(viewF);
-                //Toast.makeText(getApplicationContext(), disarmString, Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Integer result) {
+                        Toast.makeText(getApplicationContext(),"You did it.", Toast.LENGTH_SHORT).show();
+                    }
+                    public void onFailure(ParticleCloudException value) {
+                        Log.e("ERR", "Fail : " + value.toString());
+                    }
+                });
             }
         });
 
