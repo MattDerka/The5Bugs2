@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.the5bug.the5bugs.MainActivity">
 
+
     <Button
         android:id="@+id/Armbutton"
         android:layout_width="wrap_content"
