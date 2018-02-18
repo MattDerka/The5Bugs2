@@ -8,6 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+
+import io.particle.android.sdk.cloud.ParticleCloud;
+import io.particle.android.sdk.cloud.ParticleCloudException;
+import io.particle.android.sdk.utils.Async;
+import io.particle.android.sdk.utils.Toaster;
+
 public class Login extends AppCompatActivity {
 
     Button loginBtn;
@@ -25,15 +32,46 @@ public class Login extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(usr.getText().toString().equals("Admin") && psd.getText().toString().equals("password"))
-                {
-                    Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT);
-                    Intent myintent = new Intent(Login.this, MainActivity.class);
-                    startActivity(myintent);
-                }
+                View viewd = findViewById(android.R.id.content);
+
+                attemptLogin(viewd, usr.getText().toString(),psd.getText().toString());
             }
         });
 
 
+    }
+
+    /**
+     * @brief This function attempts to login with the user name and password passed in as arguments
+     * @param myView specifies the view from which this is being called
+     * @param emailInput specifies the user name to try logging in with
+     * @param passInput specifies the password to attempt logging in with
+     */
+    private void attemptLogin(View myView, final String emailInput, final String passInput){
+
+        Async.executeAsync(ParticleCloud.get(myView.getContext()), new Async.ApiWork<ParticleCloud, Void>() {
+
+            public Void callApi(ParticleCloud sparkCloud) throws ParticleCloudException, IOException {
+                sparkCloud.logIn(emailInput, passInput);
+                return null;
+            }
+
+            @Override
+            public void onSuccess(Void aVoid) {
+
+                Toaster.l(Login.this, "Logged in");
+
+                Intent myintent = new Intent(Login.this, MainActivity.class);
+                startActivity(myintent);
+                // Switch to new screen to list all connected devices
+
+            }
+
+            @Override
+            public void onFailure(ParticleCloudException e) {
+                //Log.e("LOGIN_FAILURE", e);
+                Toaster.l(Login.this, "Wrong credentials or no internet connectivity, please try again");
+            }
+        });
     }
 }
