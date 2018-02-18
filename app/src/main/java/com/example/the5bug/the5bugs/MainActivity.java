@@ -2,9 +2,11 @@ package com.example.the5bug.the5bugs;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected Button disButton;
     protected Button changePhone;
     protected TextView connectText;
+    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
     String disarmString = "Detector now disarmed";
     String armString = "Detector now armed";
     ParticleDevice d;
@@ -62,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //armButton.setClickable(false);
+                armButton.setBackgroundColor(Color.GRAY);
+                disButton.setBackgroundColor(Color.LTGRAY);
+
                 List<String> armList = new ArrayList<String>();
                 armList.add("Arm");
 
@@ -78,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
 
         disButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view2) {
+
+                //disButton.setClickable(false);
+                //armButton.setClickable(true);
+                disButton.setBackgroundColor(Color.GRAY);
+                armButton.setBackgroundColor(Color.LTGRAY);
+
+
                 List<String> disarmList = new ArrayList<String>();
                 disarmList.add("Disarm");
 
