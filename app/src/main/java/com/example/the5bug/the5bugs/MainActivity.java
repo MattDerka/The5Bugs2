@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected Button armButton;
     protected Button disButton;
+    protected Button changePhone;
     protected TextView connectText;
     String disarmString = "Detector now disarmed";
     String armString = "Detector now armed";
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         armButton = (Button)findViewById(R.id.Armbutton);
         disButton = (Button)findViewById(R.id.disarmButton);
+        changePhone = (Button)findViewById(R.id.phone);
 
 
         armButton.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
 
                 //turnOff(viewF);
                 //Toast.makeText(getApplicationContext(), disarmString, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        changePhone.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Settings.class));
+
             }
         });
 

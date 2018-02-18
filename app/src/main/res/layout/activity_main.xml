@@ -14,13 +14,13 @@
         android:layout_marginBottom="22dp"
         android:layout_marginEnd="148dp"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="11dp"
         android:text="@string/arm"
         android:textSize="50sp"
         app:layout_constraintBottom_toTopOf="@+id/disarmButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
         android:id="@+id/disarmButton"
@@ -101,5 +101,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.056" />
+
+    <Button
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="177dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="13dp"
+        android:text="Change Phone#"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/disarmButton" />
 
 </android.support.constraint.ConstraintLayout>
